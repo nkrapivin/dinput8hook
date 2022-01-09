@@ -19,23 +19,23 @@
 #define DINPUT8HOOK_API __declspec(dllimport)
 #endif
 
-using LPFUNC                = VOID(*)();
-using DirectInput8Create_t  = HRESULT        (WINAPI *)(HINSTANCE hinst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter);
-using DllCanUnloadNow_t     = HRESULT        (WINAPI *)();
-using DllGetClassObject_t   = HRESULT        (WINAPI *)(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv);
-using DllRegisterServer_t   = HRESULT        (WINAPI *)();
-using DllUnregisterServer_t = HRESULT        (WINAPI *)();
-using GetdfDIJoystick_t     = LPCDIDATAFORMAT(WINAPI *)();
+typedef HRESULT(WINAPI * DirectInput8Create_t)(HINSTANCE hinst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter);
+typedef HRESULT(WINAPI * DllCanUnloadNow_t)();
+typedef HRESULT(WINAPI * DllGetClassObject_t)(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv);
+typedef HRESULT(WINAPI * DllRegisterServer_t)();
+typedef HRESULT(WINAPI * DllUnregisterServer_t)();
+typedef LPCDIDATAFORMAT(WINAPI * GetdfDIJoystick_t)();
+typedef HRESULT(WINAPI * SetCooperativeLevel_t)(LPDIRECTINPUTDEVICE8W self, HWND hwnd, DWORD dwflags);
+typedef HRESULT(WINAPI * CreateDevice_t)(LPDIRECTINPUT8W self, REFGUID rguid, LPDIRECTINPUTDEVICE8W* lpdid, LPUNKNOWN lpunk);
 
-extern "C" {
-	BOOL TryUnloadDll();
+BOOL TryUnloadDll();
 
-	/* hooks: */
-	HRESULT         WINAPI DirectInput8Create(HINSTANCE hinst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter);
-	HRESULT         WINAPI DllCanUnloadNow();
-	_Check_return_
-	HRESULT         WINAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv);
-	HRESULT         WINAPI DllRegisterServer();
-	HRESULT         WINAPI DllUnregisterServer();
-	LPCDIDATAFORMAT WINAPI GetdfDIJoystick();
-}
+/* hooks: */
+HRESULT         WINAPI DirectInput8Create(HINSTANCE hinst, DWORD dwVersion, REFIID riidltf, LPVOID* ppvOut, LPUNKNOWN punkOuter);
+__control_entrypoint(DllExport)
+STDAPI                 DllCanUnloadNow();
+_Check_return_
+STDAPI                 DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv);
+HRESULT         WINAPI DllRegisterServer();
+HRESULT         WINAPI DllUnregisterServer();
+LPCDIDATAFORMAT WINAPI GetdfDIJoystick();
