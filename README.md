@@ -32,5 +32,5 @@ The debug configuration will auto-wait till a debugger is attached to the game e
 
 # Credits
 
-- (YellowAfterlife)[https://yal.cc] - a funny screenshot and tips. (check out his extensions too)
-- (me)[https://twitter.com/nkrapivindev] - hello!
+- [YellowAfterlife](https://yal.cc) - a funny screenshot and tips. (check out his extensions too)
+- [me](https://twitter.com/nkrapivindev) - hello!
